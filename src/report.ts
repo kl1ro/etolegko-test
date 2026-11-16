@@ -9,6 +9,7 @@ const SUMMARY_LABEL_WIDTH = 24;
 
 export function getDownloadReport(measurements: DownloadMeasurement[]): DownloadReport {
   const totalDurationInMilliseconds = getTotalDuration(measurements);
+  const averageDurationInMilliseconds = getAverageDuration(measurements);
   const totalSizeInBytes = getTotalSize(measurements);
 
   const speedInBitsPerSecond = getSpeedFromSizeAndDuration(
@@ -18,7 +19,7 @@ export function getDownloadReport(measurements: DownloadMeasurement[]): Download
 
   return {
     requestCount: measurements.length,
-    averageDurationInMilliseconds: totalDurationInMilliseconds / measurements.length,
+    averageDurationInMilliseconds,
     totalSizeInBytes,
     speedInBitsPerSecond,
   };
@@ -42,6 +43,11 @@ export function printDownloadReport(report: DownloadReport) {
 function getTotalDuration(measurements: DownloadMeasurement[]): number {
   const totalDuration = measurements.reduce((acc, cur) => acc + cur.durationInMilliseconds, 0);
   return totalDuration;
+}
+
+function getAverageDuration(measurements: DownloadMeasurement[]): number {
+  const averageDuration = getTotalDuration(measurements) / measurements.length;
+  return averageDuration;
 }
 
 function getTotalSize(measurements: DownloadMeasurement[]): number {

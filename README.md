@@ -23,16 +23,6 @@ npm start -- https://example.com/big-image.jpg
 npx tsx src/download-speed.ts <url>
 ```
 
-## Структура
-
-- `src/download-speed.ts` — точка входа: читает адрес, меряет, печатает отчёт.
-- `src/command-line.ts` — адрес из аргументов командной строки.
-- `src/download.ts` — 10 последовательных скачиваний и замер каждого.
-- `src/http.ts` — запрос и чтение тела ответа целиком.
-- `src/clock.ts` — показания часов.
-- `src/report.ts` — расчёт и печать отчёта.
-- `src/progress.ts` — заголовок и прогресс-бар во время теста.
-
 ## Проверка кода
 
 ```sh

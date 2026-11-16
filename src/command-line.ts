@@ -8,7 +8,7 @@ export class NoAddressArgumentError extends Error {
   public name = NoAddressArgumentError.name;
 
   public constructor(options?: ErrorOptions) {
-    super("No address argument is given. Usage: npx tsx download-speed.ts <url>", options);
+    super("No address argument is given. Usage: npm start -- <url>", options);
   }
 }
 

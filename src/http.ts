@@ -32,9 +32,7 @@ export class UnsuccessfulResponseStatusError extends Error {
   public url: Response["url"];
   public status: Response["status"];
 
-  public constructor(
-    options: ErrorOptions & { url: Response["url"]; status: Response["status"] },
-  ) {
+  public constructor(options: ErrorOptions & { url: Response["url"]; status: Response["status"] }) {
     super(
       `Response from ${options.url} has unsuccessful status ${String(options.status)}`,
       options,

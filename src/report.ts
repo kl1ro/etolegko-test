@@ -15,6 +15,7 @@ export function getDownloadReport(measurements: DownloadMeasurement[]): Download
   );
 
   return {
+    requestCount: measurements.length,
     averageDurationInMilliseconds: totalDurationInMilliseconds / measurements.length,
     totalSizeInBytes,
     speedInBitsPerSecond,
@@ -22,6 +23,7 @@ export function getDownloadReport(measurements: DownloadMeasurement[]): Download
 }
 
 export default interface DownloadReport {
+  requestCount: number;
   averageDurationInMilliseconds: number;
   totalSizeInBytes: number;
   speedInBitsPerSecond: number;
@@ -32,6 +34,23 @@ export function printDownloadReport(report: DownloadReport) {
   console.log(`Среднее время запроса: ${formatted.averageDuration}`);
   console.log(`Скачано всего: ${formatted.totalSize}`);
   console.log(`Скорость скачивания: ${formatted.speed}`);
+}
+
+export function printProgressReport(report: DownloadReport, deps: PrintProgressReportDeps) {
+  const formatted = formatDownloadReport(report);
+  const progress = `${String(report.requestCount)}/${String(deps.options.requestCount)}`;
+
+  console.log(
+    `Запрос ${progress}: среднее ${formatted.averageDuration}, скачано ${formatted.totalSize}, скорость ${formatted.speed}`,
+  );
+}
+
+export interface PrintProgressReportDeps {
+  options: PrintProgressReportOptions;
+}
+
+export interface PrintProgressReportOptions {
+  requestCount: number;
 }
 
 function getTotalDuration(measurements: DownloadMeasurement[]): number {

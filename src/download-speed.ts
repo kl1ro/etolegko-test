@@ -1,7 +1,7 @@
 import getUrlFromCommandLine from "./command-line.ts";
+import printDownloadHeader from "./header.ts";
 import measureDownloads, { type DownloadMeasurement } from "./download.ts";
 import {
-  printDownloadHeader,
   startProgressBar,
   stopProgressBar,
   updateProgressBar,

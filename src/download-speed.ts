@@ -1,10 +1,11 @@
 import getUrlFromCommandLine from "./command-line.ts";
+import printDownloadHeader from "./header.ts";
 import measureDownloads, { type DownloadMeasurement } from "./download.ts";
 import {
-  printDownloadHeader,
   startProgressBar,
   stopProgressBar,
   updateProgressBar,
+  type ProgressBar,
 } from "./progress.ts";
 import { getDownloadReport, printDownloadReport } from "./report.ts";
 
@@ -20,9 +21,7 @@ async function main() {
     const report = getDownloadReport(measurements);
     printDownloadReport(report);
   } catch (error) {
-    console.error("Не удалось измерить скорость скачивания");
-    console.error(error);
-    process.exitCode = 1;
+    reportSpeedMeasurementError(error);
   }
 }
 
@@ -30,19 +29,14 @@ async function measureDownloadsWithProgress(
   url: URL,
   deps: MeasureDownloadsWithProgressDeps,
 ): Promise<DownloadMeasurement[]> {
-  const measurements: DownloadMeasurement[] = [];
   const progressBar = startProgressBar(deps);
+  const innerDeps = { ...deps, progressBar };
 
   try {
-    for await (const measurement of measureDownloads(url, deps)) {
-      measurements.push(measurement);
-      updateProgressBar(progressBar, getDownloadReport(measurements));
-    }
+    return await collectDownloadMeasurements(url, innerDeps);
   } finally {
     stopProgressBar(progressBar);
   }
-
-  return measurements;
 }
 
 interface MeasureDownloadsWithProgressDeps {
@@ -51,6 +45,46 @@ interface MeasureDownloadsWithProgressDeps {
 
 interface MeasureDownloadsWithProgressOptions {
   requestCount: number;
+}
+
+function reportSpeedMeasurementError(error: unknown) {
+  console.error("Не удалось измерить скорость скачивания");
+  console.error(error);
+  process.exitCode = 1;
+}
+
+async function collectDownloadMeasurements(
+  url: URL,
+  deps: CollectDownloadMeasurementsDeps,
+): Promise<DownloadMeasurement[]> {
+  const measurements: DownloadMeasurement[] = [];
+
+  for await (const measurement of measureDownloads(url, deps)) {
+    measurements.push(measurement);
+    showMeasurementsProgress(measurements, deps);
+  }
+
+  return measurements;
+}
+
+interface CollectDownloadMeasurementsDeps {
+  options: CollectDownloadMeasurementsOptions;
+  progressBar: ProgressBar;
+}
+
+interface CollectDownloadMeasurementsOptions {
+  requestCount: number;
+}
+
+function showMeasurementsProgress(
+  measurements: DownloadMeasurement[],
+  deps: ShowMeasurementsProgressDeps,
+) {
+  updateProgressBar(deps.progressBar, getDownloadReport(measurements));
+}
+
+interface ShowMeasurementsProgressDeps {
+  progressBar: ProgressBar;
 }
 
 void main();

@@ -19,15 +19,13 @@ const EMPTY_PROGRESS: FormattedDownloadReport = {
   speed: EMPTY_STATISTIC,
 };
 
-export function printDownloadHeader(url: URL) {
-  console.log(`Скачивание ${url.href}\n`);
-}
-
-export function startProgressBar(deps: StartProgressBarDeps): SingleBar {
+export function startProgressBar(deps: StartProgressBarDeps): ProgressBar {
   const progressBar = new SingleBar(PROGRESS_BAR_OPTIONS);
   progressBar.start(deps.options.requestCount, 0, EMPTY_PROGRESS);
   return progressBar;
 }
+
+export type ProgressBar = SingleBar;
 
 export interface StartProgressBarDeps {
   options: StartProgressBarOptions;
@@ -37,10 +35,10 @@ export interface StartProgressBarOptions {
   requestCount: number;
 }
 
-export function updateProgressBar(progressBar: SingleBar, report: DownloadReport) {
+export function updateProgressBar(progressBar: ProgressBar, report: DownloadReport) {
   progressBar.update(report.requestCount, formatDownloadReport(report));
 }
 
-export function stopProgressBar(progressBar: SingleBar) {
+export function stopProgressBar(progressBar: ProgressBar) {
   progressBar.stop();
 }

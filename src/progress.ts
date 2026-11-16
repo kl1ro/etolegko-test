@@ -19,10 +19,6 @@ const EMPTY_PROGRESS: FormattedDownloadReport = {
   speed: EMPTY_STATISTIC,
 };
 
-export function printDownloadHeader(url: URL) {
-  console.log(`Скачивание ${url.href}\n`);
-}
-
 export function startProgressBar(deps: StartProgressBarDeps): ProgressBar {
   const progressBar = new SingleBar(PROGRESS_BAR_OPTIONS);
   progressBar.start(deps.options.requestCount, 0, EMPTY_PROGRESS);

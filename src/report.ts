@@ -28,12 +28,10 @@ export default interface DownloadReport {
 }
 
 export function printDownloadReport(report: DownloadReport) {
-  const averageDuration = formatMilliseconds(report.averageDurationInMilliseconds);
-  const totalSize = formatBytesAsMegabytes(report.totalSizeInBytes);
-  const speed = formatBitsPerSecondAsMegabits(report.speedInBitsPerSecond);
-  console.log(`Среднее время запроса: ${averageDuration}`);
-  console.log(`Скачано всего: ${totalSize}`);
-  console.log(`Скорость скачивания: ${speed}`);
+  const formatted = formatDownloadReport(report);
+  console.log(`Среднее время запроса: ${formatted.averageDuration}`);
+  console.log(`Скачано всего: ${formatted.totalSize}`);
+  console.log(`Скорость скачивания: ${formatted.speed}`);
 }
 
 function getTotalDuration(measurements: DownloadMeasurement[]): number {
@@ -50,6 +48,20 @@ function getSpeedFromSizeAndDuration(sizeInBytes: number, durationInMilliseconds
   const sizeInBits = sizeInBytes * BITS_IN_BYTE;
   const durationInSeconds = durationInMilliseconds / MILLISECONDS_IN_SECOND;
   return sizeInBits / durationInSeconds;
+}
+
+function formatDownloadReport(report: DownloadReport): FormattedDownloadReport {
+  return {
+    averageDuration: formatMilliseconds(report.averageDurationInMilliseconds),
+    totalSize: formatBytesAsMegabytes(report.totalSizeInBytes),
+    speed: formatBitsPerSecondAsMegabits(report.speedInBitsPerSecond),
+  };
+}
+
+interface FormattedDownloadReport {
+  averageDuration: string;
+  totalSize: string;
+  speed: string;
 }
 
 function formatMilliseconds(milliseconds: number): string {

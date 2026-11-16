@@ -4,7 +4,7 @@ import measureDownloads, { type DownloadMeasurement } from "./download.ts";
 import {
   startProgressBar,
   stopProgressBar,
-  updateProgressBar,
+  updateProgressBarWithReport,
   type ProgressBar,
 } from "./progress.ts";
 import { getDownloadReport, printDownloadReport } from "./report.ts";
@@ -80,7 +80,7 @@ function showMeasurementsProgress(
   measurements: DownloadMeasurement[],
   deps: ShowMeasurementsProgressDeps,
 ) {
-  updateProgressBar(deps.progressBar, getDownloadReport(measurements));
+  updateProgressBarWithReport(deps.progressBar, getDownloadReport(measurements));
 }
 
 interface ShowMeasurementsProgressDeps {

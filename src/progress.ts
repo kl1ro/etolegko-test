@@ -35,7 +35,7 @@ export interface StartProgressBarOptions {
   requestCount: number;
 }
 
-export function updateProgressBar(progressBar: ProgressBar, report: DownloadReport) {
+export function updateProgressBarWithReport(progressBar: ProgressBar, report: DownloadReport) {
   progressBar.update(report.requestCount, formatDownloadReport(report));
 }
 

@@ -19,6 +19,7 @@
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.39.5",
+    "@types/cli-progress": "^3.11.6",
     "@types/node": "^22.20.5",
     "eslint": "^9.39.5",
     "eslint-plugin-import": "^2.32.0",
@@ -28,5 +29,8 @@
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.2"
+  },
+  "dependencies": {
+    "cli-progress": "^3.12.0"
   }
 }

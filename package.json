@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Консольный скрипт на TypeScript: делает 10 последовательных запросов к адресу, дожидается полного ответа на каждый и печатает среднее время запроса, общий объём скачанных данных и скорость скачивания.",
   "scripts": {
-    "start": "tsx src/download-speed.ts"
+    "start": "tsx src/download-speed.ts",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,15 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@types/node": "^22.20.5",
-    "tsx": "^4.23.15"
+    "eslint": "^9.39.5",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.7",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2"
   }
 }

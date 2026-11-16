@@ -1,0 +1,23 @@
+{
+  "name": "etolegko-test",
+  "version": "1.0.0",
+  "description": "Консольный скрипт на TypeScript: делает 10 последовательных запросов к адресу, дожидается полного ответа на каждый и печатает среднее время запроса, общий объём скачанных данных и скорость скачивания.",
+  "scripts": {
+    "start": "tsx src/download-speed.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kl1ro/etolegko-test.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kl1ro/etolegko-test/issues"
+  },
+  "homepage": "https://github.com/kl1ro/etolegko-test#readme",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "tsx": "^4.23.15"
+  }
+}

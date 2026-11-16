@@ -20,9 +20,7 @@ async function main() {
     const report = getDownloadReport(measurements);
     printDownloadReport(report);
   } catch (error) {
-    console.error("Не удалось измерить скорость скачивания");
-    console.error(error);
-    process.exitCode = 1;
+    reportSpeedMeasurementError(error);
   }
 }
 
@@ -51,6 +49,12 @@ interface MeasureDownloadsWithProgressDeps {
 
 interface MeasureDownloadsWithProgressOptions {
   requestCount: number;
+}
+
+function reportSpeedMeasurementError(error: unknown) {
+  console.error("Не удалось измерить скорость скачивания");
+  console.error(error);
+  process.exitCode = 1;
 }
 
 void main();

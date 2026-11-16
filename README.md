@@ -7,13 +7,35 @@
 Нужен Node.js 18 или новее (в нём есть встроенный `fetch`).
 
 ```sh
-npx tsx download-speed.ts <url>
+npm install
+npm start -- <url>
 ```
 
 Например:
 
 ```sh
-npx tsx download-speed.ts https://example.com/big-image.jpg
+npm start -- https://example.com/big-image.jpg
+```
+
+Без установки зависимостей скрипт запускается так:
+
+```sh
+npx tsx src/download-speed.ts <url>
+```
+
+## Структура
+
+- `src/download-speed.ts` — точка входа: читает адрес, меряет, печатает отчёт.
+- `src/command-line.ts` — адрес из аргументов командной строки.
+- `src/download.ts` — 10 последовательных скачиваний и замер каждого.
+- `src/http.ts` — запрос и чтение тела ответа целиком.
+- `src/clock.ts` — показания часов.
+- `src/report.ts` — расчёт и печать отчёта.
+
+## Проверка кода
+
+```sh
+npm run lint
 ```
 
 Вывод выглядит так (числа для примера):

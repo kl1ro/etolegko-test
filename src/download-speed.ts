@@ -12,9 +12,8 @@ import { getDownloadReport, printDownloadReport } from "./report.ts";
 const REQUEST_COUNT = 10;
 
 async function main() {
-  const deps = { options: { requestCount: REQUEST_COUNT } };
-
   try {
+    const deps = { options: { requestCount: REQUEST_COUNT } };
     const url = getUrlFromCommandLine();
     printDownloadHeader(url);
     const measurements = await measureDownloadsWithProgress(url, deps);

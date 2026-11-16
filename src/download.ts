@@ -1,16 +1,11 @@
 import { getTimeSince, readClock } from "./clock.ts";
 import downloadBody from "./http.ts";
 
-export default async function measureDownloads(
+export default async function* measureDownloads(
   url: URL,
   deps: MeasureDownloadsDeps,
-): Promise<DownloadMeasurement[]> {
-  const measurements: DownloadMeasurement[] = [];
-
-  for (let index = 0; index < deps.options.requestCount; index++)
-    measurements.push(await measureDownload(url));
-
-  return measurements;
+): AsyncGenerator<DownloadMeasurement> {
+  for (let index = 0; index < deps.options.requestCount; index++) yield await measureDownload(url);
 }
 
 export interface MeasureDownloadsDeps {

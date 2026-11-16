@@ -8,12 +8,12 @@ async function sendRequest(url: URL): Promise<Response> {
   try {
     return await fetch(url);
   } catch (error) {
-    throw new SendRequestError({ url, cause: error });
+    throw new RequestFailedError({ url, cause: error });
   }
 }
 
-export class SendRequestError extends Error {
-  public name = SendRequestError.name;
+export class RequestFailedError extends Error {
+  public name = RequestFailedError.name;
   public url: URL;
 
   public constructor(options: ErrorOptions & { url: URL }) {
@@ -47,12 +47,12 @@ async function readResponseBody(response: Response): Promise<ArrayBuffer> {
   try {
     return await response.arrayBuffer();
   } catch (error) {
-    throw new ReadResponseBodyError({ url: response.url, cause: error });
+    throw new UnreadableResponseBodyError({ url: response.url, cause: error });
   }
 }
 
-export class ReadResponseBodyError extends Error {
-  public name = ReadResponseBodyError.name;
+export class UnreadableResponseBodyError extends Error {
+  public name = UnreadableResponseBodyError.name;
   public url: Response["url"];
 
   public constructor(options: ErrorOptions & { url: Response["url"] }) {
